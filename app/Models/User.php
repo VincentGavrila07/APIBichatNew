@@ -78,4 +78,10 @@ class User extends Authenticatable
     {
         return ['male', 'female'];
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
 }
