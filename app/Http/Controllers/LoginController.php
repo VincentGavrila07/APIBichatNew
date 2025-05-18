@@ -31,6 +31,8 @@ class LoginController extends Controller
         return response()->json([
             'message' => 'Login successful',
             'user' => $user,
+            'major' => $user->major ? $user->major->name : null,
+            'faculty' => $user->faculty ? $user->faculty->name : null,
         ]);
     }
 
