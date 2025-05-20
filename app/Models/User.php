@@ -26,6 +26,8 @@ class User extends Authenticatable
         'remember_token',
         'gender',
         'description',
+        'preferred_gender',
+        'preferred_campus',
     ];
 
     // Field yang disembunyikan dari array/json (biasanya untuk keamanan)
