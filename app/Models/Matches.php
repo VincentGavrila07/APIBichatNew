@@ -15,6 +15,7 @@ class Matches extends Model
         'user_id',
         'liked_user_id',
         'is_mutual',
+        'notified',
     ];
 
     // Relasi ke user yang melakukan like
@@ -32,5 +33,6 @@ class Matches extends Model
     // Cast ke boolean
     protected $casts = [
         'is_mutual' => 'boolean',
+        'notified' => 'boolean',
     ];
 }

@@ -23,3 +23,11 @@ Route::put('/preferences/{id}', [MatchesController::class, 'updatePreferences'])
 // Route::get('/users/{id}/matches', [MatchesController::class, 'getMatches']);
 Route::get('/show-matches', [MatchesController::class, 'showMatches']);
 Route::post('/show-matches', [MatchesController::class, 'showMatches']);
+Route::post('/like', [MatchesController::class, 'likeUser']);
+Route::post('/dislike', [MatchesController::class, 'dislikeUser']);
+Route::get('/matches', [MatchesController::class, 'getMatches']);
+Route::post('/get-new-matches', [MatchesController::class, 'getNewMatches']);
+Route::post('/mark-matches-notified', [MatchesController::class, 'markMatchesNotified']);
+
+
+
