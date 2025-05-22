@@ -63,17 +63,12 @@ class MatchesController extends Controller
         $preferredGender = $user->preferred_gender;
         $preferredCampus = $user->preferred_campus;
 
-        // Ambil semua ID user yang pernah di-like atau di-swipe oleh user sekarang
         $interactedUserIds = Matches::where('user_id', $userId)
             ->pluck('liked_user_id')
             ->toArray();
 
-        // Ambil satu calon user yang:
-        // - belum pernah di-like/silang
-        // - bukan user sendiri
-        // - sesuai preferensi
-        // - punya foto
-        $candidate = User::where('id', '!=', $userId)
+        $candidate = User::with(['faculty', 'major'])
+            ->where('id', '!=', $userId)
             ->whereNotIn('id', $interactedUserIds)
             ->when($preferredGender, fn($query) => $query->where('gender', $preferredGender))
             ->when($preferredCampus, fn($query) => $query->where('campus', $preferredCampus))
@@ -81,8 +76,22 @@ class MatchesController extends Controller
             ->inRandomOrder()
             ->first();
 
-        return response()->json($candidate);
+        if (!$candidate) {
+            return response()->json(null);
+        }
+
+        return response()->json([
+            'id' => $candidate->id,
+            'name' => $candidate->name,
+            'description' => $candidate->description,
+            'photos' => $candidate->photos,
+            'faculty' => $candidate->faculty ? $candidate->faculty->name : null,
+            'major' => $candidate->major ? $candidate->major->name : null,
+            'campus' => $candidate->campus,
+            'gender' => $candidate->gender,
+        ]);
     }
+
 
 
 
