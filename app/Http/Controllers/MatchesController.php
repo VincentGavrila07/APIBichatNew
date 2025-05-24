@@ -83,6 +83,7 @@ class MatchesController extends Controller
         return response()->json([
             'id' => $candidate->id,
             'name' => $candidate->name,
+            'birthdate' => $candidate->birthdate,
             'description' => $candidate->description,
             'photos' => $candidate->photos,
             'faculty' => $candidate->faculty ? $candidate->faculty->name : null,
