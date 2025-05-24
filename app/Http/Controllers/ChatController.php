@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
+use App\Models\Messages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,7 +21,7 @@ class ChatController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $message = Message::create([
+        $message = Messages::create([
             'sender_id' => $request->sender_id,
             'receiver_id' => $request->receiver_id,
             'message' => $request->message,
@@ -42,7 +42,7 @@ class ChatController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $messages = Message::where(function ($query) use ($request) {
+        $messages = Messages::where(function ($query) use ($request) {
             $query->where('sender_id', $request->user1_id)
                 ->where('receiver_id', $request->user2_id);
         })->orWhere(function ($query) use ($request) {
