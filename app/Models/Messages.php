@@ -19,5 +19,5 @@ class Messages extends Model
 
     // Jika kamu ingin otomatis mengatur created_at dan updated_at, Laravel sudah otomatis
     // tapi jika timestamp kolom berbeda, tambahkan property berikut:
-    // public $timestamps = true;
+    public $timestamps = true;
 }

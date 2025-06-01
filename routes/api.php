@@ -27,7 +27,11 @@ Route::get('/matches', [MatchesController::class, 'getMatches']);
 Route::post('/get-new-matches', [MatchesController::class, 'getNewMatches']);
 Route::post('/mark-matches-notified', [MatchesController::class, 'markMatchesNotified']);
 Route::post('/chat/send', [ChatController::class, 'sendMessage']);
-Route::get('/chat/messages', [ChatController::class, 'getMessages']);
+Route::get('/chats', [ChatController::class, 'getMessages']);
+Route::post('/chat/matched-user', [ChatController::class, 'getMatchedUser']);
+Route::get('/chat/conversations', [ChatController::class, 'conversations']);
+
+
 
 
 
