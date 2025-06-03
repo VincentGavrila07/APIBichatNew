@@ -26,6 +26,8 @@ class User extends Authenticatable
         'remember_token',
         'gender',
         'description',
+        'preferred_gender',
+        'preferred_campus',
     ];
 
     // Field yang disembunyikan dari array/json (biasanya untuk keamanan)
@@ -52,6 +54,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Major::class);
     }
+
+
+    
 
     // Optional helper: untuk deskripsi kampus
     public static function campusOptions(): array
