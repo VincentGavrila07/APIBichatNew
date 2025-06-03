@@ -81,14 +81,16 @@ class ChatController extends Controller
             return response()->json(['error' => 'No mutual match found'], 404);
         }
 
-        $currentUser = User::find($currentUserId);
-        $matchedUser = User::find($matchedUserId);
+        // Eager load faculty dan major relasi
+        $currentUser = User::with(['faculty', 'major'])->find($currentUserId);
+        $matchedUser = User::with(['faculty', 'major'])->find($matchedUserId);
 
         return response()->json([
             'currentUser' => $currentUser,
             'matchedUser' => $matchedUser,
         ]);
     }
+
     public function conversations(Request $request)
     {
         $validator = Validator::make($request->all(), [

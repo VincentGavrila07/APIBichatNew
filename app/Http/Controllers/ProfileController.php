@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Hobby;
-use App\Models\UserHobby;
 use Illuminate\Support\Facades\Validator;
-
 
 class ProfileController extends Controller
 {
@@ -18,7 +15,6 @@ class ProfileController extends Controller
 
         return response()->json($user);
     }
-
 
     public function update(Request $request)
     {
@@ -35,8 +31,6 @@ class ProfileController extends Controller
             'description' => 'nullable|string',
             'photos' => 'nullable|array',
             'photos.*' => 'string',
-            'hobbies' => 'nullable|array',
-            'hobbies.*' => 'string',
         ]);
 
         if ($validator->fails()) {
@@ -66,27 +60,16 @@ class ProfileController extends Controller
             $validated['photos'] = $user->photos;
         }
 
-        // Update data user kecuali hobbies
-        $user->update(collect($validated)->except(['hobbies'])->toArray());
-
-        // Sync hobbies jika ada
-        if (isset($validated['hobbies'])) {
-                // Anggap $validated['hobbies'] array of names
-                $hobbyIds = Hobby::whereIn('name', $validated['hobbies'])->pluck('id')->toArray();
-                $user->hobbies()->sync($hobbyIds);
-            }
-
+        // Update data user
+        $user->update($validated);
 
         $user->photos = json_decode($user->photos);
 
         return response()->json([
             'message' => 'Profile updated successfully',
-            'user' => $user->load('hobbies'), // return user lengkap dengan hobbies
+            'user' => $user,
         ]);
     }
-
-
-
 
     public function uploadPhoto(Request $request)
     {
@@ -103,7 +86,4 @@ class ProfileController extends Controller
 
         return response()->json(['path' => $path], 201);
     }
-
-
-
 }
