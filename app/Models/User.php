@@ -56,10 +56,7 @@ class User extends Authenticatable
     }
 
 
-    public function hobbies()
-    {
-        return $this->belongsToMany(Hobby::class, 'user_hobbies', 'user_id', 'hobby_id');
-    }
+    
 
     // Optional helper: untuk deskripsi kampus
     public static function campusOptions(): array
